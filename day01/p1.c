@@ -20,13 +20,5 @@ int main(void) {
     sum += atoi(line);
   }
 
-  int maxThreeSum = 0;
-
-  printf("Part1: %d\n", utl_max(sums));
-
-  for (int i = 0; i < 3; i++) {
-    maxThreeSum += utl_max(sums);
-    sums[utl_findElemInArr(utl_max(sums), sums)] = -1;
-  }
-  printf("Part2: %d\n", maxThreeSum);
+  printf("The elf is carrying %d\n calories!", utl_max(sums));
 }

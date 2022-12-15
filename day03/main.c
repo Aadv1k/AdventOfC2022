@@ -6,16 +6,6 @@
 #define MAX_L 100
 #define ASCII_LOWER_BEGIN 91
 
-char findCommoninDoublets(char *str1, char *str2) {
-  for (int i = 0; i < strlen(str1); i++) {
-    char *match = strchr(str2, str1[i]);
-    if (match) {
-      return *match;
-    };
-  }
-  return 0;
-}
-
 char findCommonCharInTriplets(char *str1, char *str2, char *str3) {
   for (int i = 0; i < strlen(str1); i++) {
     char *match1 = strchr(str2, str1[i]);
@@ -43,14 +33,10 @@ int main(void) {
 
   char lines[flength][MAX_L];
 
-  int part1 = 0;
-
-  for (int i = 0; fgets(lines[i], MAX_L, input); i++) {
-    char right[MAX_L], left[MAX_L];
-    strcpy(right, lines[i] + strlen(lines[i]) / 2);
-    strcpy(left, lines[i]);
-    *(left + strlen(lines[i]) / 2) = '\0';
-    part1 += deriveScoreFromChar(findCommoninDoublets(lines[i], right));
+  int i = 0;
+  while (!feof(input)) {
+    fgets(lines[i], MAX_L, input);
+    i++;
   }
 
   int part2 = 0;
@@ -60,6 +46,6 @@ int main(void) {
         findCommonCharInTriplets(lines[i], lines[i + 1], lines[i + 2]));
   }
 
-  printf("Part 1: %d\nPart 2: %d\n", part1, part2);
+  printf("Elf group item priorities %d\n", part2);
   fclose(input);
 }
