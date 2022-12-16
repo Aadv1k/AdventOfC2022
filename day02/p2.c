@@ -1,41 +1,48 @@
 #include "../utils.h"
-#include "day02.h"
 
 #include <stdio.h>
 
-// Return the score for each of the move
-int getMoveScore(char t) {
-  enum MoveScore;
+enum Scores {
+  ScoreRock = 1,
+  ScorePaper,
+  ScoreScissor,
+  ScoreDraw = 3,
+  ScoreWon = 6,
+  ScoreLoose = 0,
+};
 
+int getMoveScore(char t) {
+  enum Scores;
   switch (t) {
   case 'X':
-    return MoveRock;
+    return ScoreRock;
   case 'Y':
-    return MovePaper;
+    return ScorePaper;
   case 'Z':
-    return MoveScissor;
+    return ScoreScissor;
   }
   return -1;
 }
 
 int getGameScore(char t) {
-  enum GameScore;
+  enum Scores;
   switch (t) {
   case 'X':
-    return GameLoose;
+    return ScoreLoose;
   case 'Y':
-    return GameDraw;
+    return ScoreDraw;
   case 'Z':
-    return GameWon;
+    return ScoreWon;
   }
   return -1;
 }
 
+// Socre = wone/loose/draw score + move score
 int calculateScore(char inp1, char inp2) {
   int score = getGameScore(inp2);
 
   switch (inp1) {
-  case 'A':
+  case 'A': // Rock
     if (inp2 == 'X')
       score += getMoveScore('Z');
     if (inp2 == 'Y')
@@ -43,11 +50,11 @@ int calculateScore(char inp1, char inp2) {
     if (inp2 == 'Z')
       score += getMoveScore('Y');
     break;
-  case 'B':
+  case 'B': // Paper
     score += getMoveScore(inp2);
     break;
-  case 'C':
-    if (inp2 == 'X')
+  case 'C': // Scissors
+    if (inp2 == 'X') 
       score += getMoveScore('Y');
     if (inp2 == 'Y')
       score += getMoveScore('Z');
@@ -67,11 +74,11 @@ int main() {
     fscanf(input, "%s %s", games[i], games[i] + 1);
   }
 
-  int part1, part2;
+  int part2;
 
   for (int i = 0; i < sizeof(games) / sizeof(games[0]); i++) {
     part2 += calculateScore(*games[i], games[i][1]);
   }
 
-  printf("Total score according to the elf's instruction is %d\n", part2);
+  printf("Part2: %d\n", part2);
 }

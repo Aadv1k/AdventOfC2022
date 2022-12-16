@@ -1,69 +1,69 @@
 #include "../utils.h"
-#include "day02.h"
 
 #include <stdio.h>
 
-#define MAX_E 5000
+enum Scores {
+  ScoreRock = 1,
+  ScorePaper,
+  ScoreScissor,
+  ScoreDraw = 3,
+  ScoreWon = 6,
+  ScoreLoose = 0,
+};
 
-
-// Return the score for each of the move
 int getMoveScore(char t) {
-  enum MoveScore;
-
+  enum Scores;
   switch (t) {
   case 'X':
-    return MoveRock;
+    return ScoreRock;
   case 'Y':
-    return MovePaper;
+    return ScorePaper;
   case 'Z':
-    return MoveScissor;
+    return ScoreScissor;
   }
   return -1;
 }
 
 int getGameScore(char t) {
-  enum GameScore;
+  enum Scores;
   switch (t) {
   case 'X':
-    return GameLoose;
+    return ScoreLoose;
   case 'Y':
-    return GameDraw;
+    return ScoreDraw;
   case 'Z':
-    return GameWon;
+    return ScoreWon;
   }
   return -1;
 }
 
+// Gets the score -> moveScore + won/loose/draw score
 int calculateScore(char inp1, char inp2) {
-  enum GameScore;
-
+  enum Scores;
   int score = getMoveScore(inp2);
-
   switch (inp1) {
-  case 'A':
+  case 'A': // Rock
     if (inp2 == 'X')
-      score += GameDraw;
+      score += ScoreDraw;
     if (inp2 == 'Y')
-      score += GameWon;
+      score += ScoreWon;
     if (inp2 == 'Z')
-      score += GameLoose;
+      score += ScoreLoose;
     break;
-  case 'B':
+  case 'B': // Paper
     score += getGameScore(inp2);
     break;
-  case 'C':
+  case 'C': // Scissor
     if (inp2 == 'X')
-      score += GameWon;
+      score += ScoreWon;
     if (inp2 == 'Y')
-      score += GameLoose;
+      score += ScoreLoose;
     if (inp2 == 'Z')
-      score += GameDraw;
+      score += ScoreDraw;
     break;
   }
-
   return score;
 }
-
 
 int main() {
   FILE *input = fopen("./input.txt", "r");
@@ -79,5 +79,5 @@ int main() {
     part1 += calculateScore(*games[i], games[i][1]);
   }
 
-  printf("Total score according to the guide is %d\n", part1);
+  printf("Part1: %d\n", part1);
 }
