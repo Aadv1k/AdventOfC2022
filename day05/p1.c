@@ -9,7 +9,7 @@
 void print_crates(char crates[][MAX_L], int crateWidth) {
   puts("====================");
   for (int i = 0; i < crateWidth; i++) {
-    printf("%d: ", i+1);
+    printf("%d: ", i + 1);
     if (crates[i][0] == 0) {
       printf("[.]\n");
       continue;
@@ -17,7 +17,7 @@ void print_crates(char crates[][MAX_L], int crateWidth) {
     for (int j = 0; crates[i][j] != 0; j++) {
       printf("[%c]", crates[i][j]);
     }
-   puts("");
+    puts("");
   }
   puts("====================");
 }
@@ -63,8 +63,14 @@ int main(void) {
     toAddr--;
     fromAddr--;
 
+    char fromAddrCpy[MAX_L] = "";
+
     for (int i = 0; i < amount; i++) {
+      // Copy the "truncated" original string to a dud
+      strcpy(fromAddrCpy, &crates[fromAddr][i + 1]);
+
       char temp[MAX_L] = "";
+
       // prepend the character from the fromAddr to the toAddr
       strcpy(temp, crates[toAddr]);
       strncpy(crates[toAddr], &crates[fromAddr][i], 1);
@@ -73,21 +79,13 @@ int main(void) {
       }
       strcat(crates[toAddr], temp);
 
-      // Instead of removing the element, we will instead replace it; this is
+      // Instead of removing the element, we will let the loop play out; this is
       // done to preserve the index of the crates[fromAddr]
-      crates[fromAddr][i] = '.';
     }
-
-    // Here we need to filter out the '.' other wise they will mess with further results
-    for (int i = 0; i < crateWidth; i++) {
-      char temp[MAX_L] = "";
-      for (int j = 0; j < strlen(crates[i]); j++) {
-        if (crates[i][j] != '.')
-          strncat(temp, &crates[i][j], 1);
-      }
-      strcpy(crates[i], temp);
-    }
+    // Copy the truncated dud to the crates[fromAddr]
+    strcpy(crates[fromAddr], fromAddrCpy);
   }
+
   print_crates(crates, crateWidth);
 
   char result[MAX_L] = "";
