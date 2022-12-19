@@ -13,6 +13,14 @@ dir e
 $ cd e
 $ ls
 584 i
+dir a
+$ cd a
+$ ls
+dir e
+29116 f
+2557 g
+62596 h.lst
+$ cd ..
 $ cd ..
 $ cd ..
 $ cd d

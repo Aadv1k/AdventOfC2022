@@ -2,9 +2,9 @@
 #define UTILS_H
 
 #include <stdio.h>
-int utl_max(int nums[]) {
+int utl_max(int nums[], size_t length) {
   int result = 0;
-  for (int i = 0; nums[i] != 0; i++) {
+  for (int i = 0; i < length; i++) {
     if (nums[i] > result && nums[i] != -1) {
       result = nums[i];
     };
